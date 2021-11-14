@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css?family=Averia+Serif+Libre");
+
+body {
+  padding: 4rem;
+  text-align: center;
+  background: #f2f7f2;
+  font-family: "Averia Serif Libre", cursive;
+  grid-gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  text-align: center;
+
+  @media screen and (min-width: 800px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .title {
+    font-size: 3rem;
+    margin: 0 0 2rem;
+  }
+}
+
+.splitting {
+  width: 100%;
+  margin-bottom: 2rem;
+
+  .cell {
+    transition: 1s cubic-bezier(0.55, 0.1, 0.15, 0.95);
+    transition-delay: calc(0.1s * var(--cell-index));
+    position: absolute;
+    top: calc(var(--row-index) * 100% / var(--row-total));
+    left: calc(100% / var(--col-total) * var(--col-index));
+    height: calc(100% / var(--row-total));
+    width: calc(100% / var(--col-total));
+  }
+
+  &__text {
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    visibility: visible;
+    margin: 0;
+  }
+
+  &--slant-slide {
+    .splitting__text {
+      transform: rotate(-90deg) translate(25%, -50%);
+      left: 0;
+    }
+
+    &:hover {
+      .cell {
+        transform: scale(0.8) skew(-12deg) translateX(150%);
+      }
+    }
+  }
+
+  &--slant-blinds {
+    &:hover {
+      .cell {
+        &:nth-child(-n + 3) {
+          transform: scale(0.8) skew(12deg) translateX(-100%);
+        }
+
+        &:nth-child(n + 4) {
+          transform: scale(0.8) skew(-12deg) translateX(100%);
+        }
+      }
+    }
+  }
+
+  &--show-border {
+    &:hover {
+      .cell {
+        &:nth-child(n + 16):nth-child(-n + 19),
+        &:nth-child(n + 6):nth-child(-n + 9) {
+          transform: translateX(-300%);
+        }
+
+        &:nth-child(n + 12):nth-child(-n + 15) {
+          transform: translateX(300%);
+        }
+      }
+    }
+  }
+
+  &--slide-over {
+    &:hover {
+      .cell {
+        &:nth-child(even) {
+          transform: translateX(-300%);
+        }
+
+        &:nth-child(odd) {
+          transform: translateX(300%);
+        }
+      }
+    }
+  }
+}
